@@ -31,7 +31,7 @@ namespace EASV.CustomerRestApi.Controllers
             if (id < 1) return BadRequest("Id must be greater then 0");
             
             //return _customerService.FindCustomerById(id);
-            return Ok("Hej folkens");
+            return _customerService.FindCustomerByIdIncludeOrders(id);
         }
 
         // POST api/customers -- CREATE JSON
