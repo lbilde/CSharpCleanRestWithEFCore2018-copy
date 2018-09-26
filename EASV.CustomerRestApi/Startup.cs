@@ -51,7 +51,8 @@ namespace EASV.CustomerRestApi
             else if (_env.IsProduction())
             {
                 services.AddDbContext<CustomerAppContext>(
-                    opt => opt.UseSqlServer(_conf.GetConnectionString("DefaultConnection")));
+                    opt => opt
+                        .UseSqlServer(_conf.GetConnectionString("DefaultConnection")));
             }
             
             services.AddScoped<ICustomerRepository, CustomerRepository>();

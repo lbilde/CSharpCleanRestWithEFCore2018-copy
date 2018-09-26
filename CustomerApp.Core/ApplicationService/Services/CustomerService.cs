@@ -73,11 +73,7 @@ namespace CustomerApp.Core.ApplicationService.Services
 
         public Customer UpdateCustomer(Customer customerUpdate)
         {
-            var customer = FindCustomerById(customerUpdate.Id);
-            customer.FirstName = customerUpdate.FirstName;
-            customer.LastName = customerUpdate.LastName;
-            customer.Address = customerUpdate.Address;
-            return customer;
+            return _customerRepo.Update(customerUpdate);
         }
 
         public Customer DeleteCustomer(int id)

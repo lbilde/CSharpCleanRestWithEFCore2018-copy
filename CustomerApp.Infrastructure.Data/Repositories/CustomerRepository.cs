@@ -42,7 +42,19 @@ namespace CustomerApp.Infrastructure.Data.Repositories
 
         public Customer Update(Customer customerUpdate)
         {
-            throw new System.NotImplementedException();
+            _ctx.Attach(customerUpdate).State = EntityState.Modified;
+            _ctx.SaveChanges();
+
+            foreach (var order in _ctx.Orders.Where(o => o.Customer.Id == customerUpdate.Id))
+            {
+                if (!customerUpdate.Orders.Exists(co => co.Id == order.Id))
+                {
+                    order.Customer = null;
+                    _ctx.Entry(order).Reference(o => o.Customer).IsModified = true;
+                }
+            }
+            _ctx.SaveChanges();
+            return customerUpdate;
         }
 
         public Customer Delete(int id)
