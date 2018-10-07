@@ -43,15 +43,14 @@ namespace CustomerApp.Infrastructure.Data.Repositories
         public Customer Update(Customer customerUpdate)
         {
             _ctx.Attach(customerUpdate).State = EntityState.Modified;
-            _ctx.SaveChanges();
-
-            foreach (var order in _ctx.Orders.Where(o => o.Customer.Id == customerUpdate.Id))
+            _ctx.Entry(customerUpdate).Collection(c => c.Orders).IsModified = true;
+            var orders = _ctx.Orders.Where(o => o.Customer.Id == customerUpdate.Id
+                                   && !customerUpdate.Orders.Exists(co => co.Id == o.Id));
+            foreach (var order in orders)
             {
-                if (!customerUpdate.Orders.Exists(co => co.Id == order.Id))
-                {
-                    order.Customer = null;
-                    _ctx.Entry(order).Reference(o => o.Customer).IsModified = true;
-                }
+                order.Customer = null;
+                _ctx.Entry(order).Reference(o => o.Customer)
+                    .IsModified = true;
             }
             _ctx.SaveChanges();
             return customerUpdate;

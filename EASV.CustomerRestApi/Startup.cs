@@ -21,7 +21,7 @@ namespace EASV.CustomerRestApi
         {
             Configuration = configuration;
         }*/
-        private IConfiguration _conf { get; }
+        private IConfiguration Configuration { get; }
 
         private IHostingEnvironment _env { get; set; }
 
@@ -29,11 +29,12 @@ namespace EASV.CustomerRestApi
         {
             _env = env;
             var builder = new ConfigurationBuilder()
+                
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-            _conf = builder.Build();
+            Configuration = builder.Build();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -52,7 +53,7 @@ namespace EASV.CustomerRestApi
             {
                 services.AddDbContext<CustomerAppContext>(
                     opt => opt
-                        .UseSqlServer(_conf.GetConnectionString("DefaultConnection")));
+                        .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             }
             
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -90,7 +91,12 @@ namespace EASV.CustomerRestApi
                 }
                 app.UseHsts();
             }
-
+            
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost")
+                    .AllowAnyHeader()
+            );
+            
             //app.UseHttpsRedirection();
             app.UseMvc();
         }

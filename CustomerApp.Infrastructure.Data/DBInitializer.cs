@@ -23,12 +23,12 @@ namespace CustomerApp.Infrastructure.Data
                 LastName = "Bøllesen"
             }).Entity;
                     
-            ctx.Orders.Add(new Order()
+            var order1 = ctx.Orders.Add(new Order()
             {
                 OrderDate = DateTime.Now,
                 DeliveryDate = DateTime.Now,
                 Customer = cust1
-            });
+            }).Entity;
             ctx.Orders.Add(new Order()
             {
                 OrderDate = DateTime.Now,
@@ -40,6 +40,19 @@ namespace CustomerApp.Infrastructure.Data
                 OrderDate = DateTime.Now,
                 DeliveryDate = DateTime.Now,
                 Customer = cust2
+            });
+            var prod = ctx.Products.Add(new Product()
+            {
+                Name = "smølf"
+            }).Entity;
+            ctx.Products.Add(new Product()
+            {
+                Name = "Ko"
+            });
+            ctx.OrderLines.Add(new OrderLine()
+            {
+                Product = prod,
+                Order = order1
             });
             ctx.SaveChanges();
         }
