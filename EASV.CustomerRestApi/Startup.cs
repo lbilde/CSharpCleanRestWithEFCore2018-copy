@@ -68,7 +68,12 @@ namespace EASV.CustomerRestApi
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:63342").AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,10 +98,8 @@ namespace EASV.CustomerRestApi
                 app.UseHsts();
             }
             
-            app.UseCors(builder =>
-                builder.WithOrigins("http://localhost")
-                    .AllowAnyHeader()
-            );
+            // Shows UseCors with named policy.
+            app.UseCors("AllowSpecificOrigin");
             
             //app.UseHttpsRedirection();
             app.UseMvc();
