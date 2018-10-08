@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,6 +32,8 @@ namespace CustomerApp.Core.ApplicationService.Services
                 throw new InvalidDataException("Customer Not found");
             if(order.OrderDate == null)
                 throw new InvalidDataException("Order needs a Order Date");
+            if(order.DeliveryDate <= DateTime.MinValue)
+                throw new InvalidDataException("To create Order you need a deliveryDate");
 
             return _orderRepo.Create(order);
         }
