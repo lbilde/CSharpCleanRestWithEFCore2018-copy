@@ -43,12 +43,12 @@ namespace CustomerApp.Core.ApplicationService.Services
             return _orderRepo.ReadyById(id);
         }
 
-        public List<Order> GetAllOrders()
+        public PagedList<Order> GetAllOrders()
         {
-            return _orderRepo.ReadAll().ToList();
+            return _orderRepo.ReadAll();
         }
 
-        public List<Order> GetFilteredOrders(Filter filter)
+        public PagedList<Order> GetFilteredOrders(Filter filter)
         {
             if (filter.CurrentPage < 0 || filter.ItemsPrPage < 0)
             {
@@ -59,7 +59,7 @@ namespace CustomerApp.Core.ApplicationService.Services
                 throw new InvalidDataException("Index out bounds, CurrentPage is to high");
             }
 
-            return _orderRepo.ReadAll(filter).ToList();
+            return _orderRepo.ReadAll(filter);
         }
 
         public Order UpdateOrder(Order orderUpdate)

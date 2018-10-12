@@ -76,41 +76,9 @@ namespace TestCore.ApplicationService.Service
             };
             service.CreateOrder(order);
             orderRepo.Verify(x => x.Create(It.IsAny<Order>()), Times.Once);
-  
+            custRepo.Verify(x => x.ReadyById(It.IsAny<int>()), Times.Once);
+
         }
 
-    }
-
-    public class CustomerRepoTest : ICustomerRepository
-    {
-        public Customer Create(Customer customer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer ReadyById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Customer> ReadAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer Update(Customer customerUpdate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer ReadyByIdIncludeOrders(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

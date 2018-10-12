@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace EASV.CustomerRestApi
 {
@@ -21,22 +22,23 @@ namespace EASV.CustomerRestApi
         {
             Configuration = configuration;
         }*/
-        private IConfiguration Configuration { get; }
-
-        private IHostingEnvironment _env { get; set; }
+        
+        private IConfiguration _conf { get; }
+        private IHostingEnvironment _env { get; }
 
         public Startup(IHostingEnvironment env)
         {
             _env = env;
             var builder = new ConfigurationBuilder()
-                
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            _conf = builder.Build();
+            
+            
         }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -53,7 +55,7 @@ namespace EASV.CustomerRestApi
             {
                 services.AddDbContext<CustomerAppContext>(
                     opt => opt
-                        .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                        .UseSqlServer(_conf.GetConnectionString("DefaultConnection")));
             }
             
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -64,6 +66,7 @@ namespace EASV.CustomerRestApi
 
             services.AddMvc().AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.MaxDepth = 2;
             });
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -71,8 +74,14 @@ namespace EASV.CustomerRestApi
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://localhost:63342").AllowAnyHeader()
-                        .AllowAnyMethod());
+                    builder => builder
+                        //.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+                        .WithOrigins("http://localhost:63342").AllowAnyHeader().AllowAnyMethod());
+            });
+            
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Awesome API", Version = "v1" });
             });
         }
 
@@ -103,6 +112,15 @@ namespace EASV.CustomerRestApi
             
             //app.UseHttpsRedirection();
             app.UseMvc();
+            
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
         }
     }
 }

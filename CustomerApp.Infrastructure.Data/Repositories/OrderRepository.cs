@@ -42,16 +42,28 @@ namespace CustomerApp.Infrastructure.Data.Repositories
                 .FirstOrDefault(o => o.Id == id);
         }
 
-        public IEnumerable<Order> ReadAll(Filter filter)
+        public PagedList<Order> ReadAll(Filter filter)
         {
+            var query = _ctx.Set<Order>();
+            
             if (filter == null)
             {
-                return _ctx.Orders;
+                return new PagedList<Order>() {Items = _ctx.Orders.ToList(), Count = _ctx.Orders.Count()};
             }
 
-            return _ctx.Orders
+            var page = query.Select(e => e)
                 .Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
-                .Take(filter.ItemsPrPage);
+                .Take(filter.ItemsPrPage)
+                .GroupBy(e => new { Total = query.Count() })
+                .FirstOrDefault();
+            
+            if (page != null)
+            {
+                int total = page.Key.Total;
+                List<Order> items = page.Select(e => e).ToList();
+                return new PagedList<Order>() {Items = items, Count = total};
+            }
+            return new PagedList<Order>() {Items = new List<Order>(), Count = 0};
         }
 
         public int Count()
