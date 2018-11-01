@@ -73,7 +73,7 @@ namespace EASV.CustomerRestApi.Controllers
                 return StatusCode(404, "Did not find Customer with ID " + id);
             }
 
-            return Ok(customer);
+            return NoContent();
         }
     }
 }
