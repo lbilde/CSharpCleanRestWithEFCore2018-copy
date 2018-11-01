@@ -65,7 +65,7 @@ namespace EASV.CustomerRestApi.Controllers
 
         // DELETE api/customers/5
         [HttpDelete("{id}")]
-        public ActionResult<Customer> Delete(int id)
+        public ActionResult<string> Delete(int id)
         {
             var customer = _customerService.DeleteCustomer(id);
             if (customer == null)
