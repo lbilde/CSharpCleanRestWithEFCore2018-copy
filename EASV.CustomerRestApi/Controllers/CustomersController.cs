@@ -65,7 +65,7 @@ namespace EASV.CustomerRestApi.Controllers
 
         // DELETE api/customers/5
         [HttpDelete("{id}")]
-        public ActionResult<string> Delete(int id)
+        public ActionResult<Customer> Delete(int id)
         {
             var customer = _customerService.DeleteCustomer(id);
             if (customer == null)
@@ -73,7 +73,7 @@ namespace EASV.CustomerRestApi.Controllers
                 return StatusCode(404, "Did not find Customer with ID " + id);
             }
 
-            return Ok($"Customer with Id: {id} is Deleted");
+            return Ok(customer);
         }
     }
 }
