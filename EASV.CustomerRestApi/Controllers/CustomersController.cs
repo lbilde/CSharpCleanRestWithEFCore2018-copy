@@ -18,7 +18,7 @@ namespace EASV.CustomerRestApi.Controllers
         
         // GET api/customers -- READ All
         [HttpGet]
-        public ActionResult<IEnumerable<Customer>> Get(Filter filter)
+        public ActionResult<IEnumerable<Customer>> Get([FromQuery] Filter filter)
         {
             if (filter.CurrentPage == 0 && filter.ItemsPrPage == 0)
             {
