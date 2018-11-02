@@ -35,8 +35,12 @@ namespace CustomerApp.Infrastructure.Data.Repositories
                 .FirstOrDefault(c => c.Id == id);
         }
 
-        public IEnumerable<Customer> ReadAll()
+        public IEnumerable<Customer> ReadAll(Filter filter)
         {
+            if (filter != null && filter.ItemsPrPage > 0 && filter.CurrentPage > 0)
+            {
+                return _ctx.Customers.Skip((filter.CurrentPage - 1) * filter.ItemsPrPage).Take(filter.ItemsPrPage);
+            }
             return _ctx.Customers;
         }
 

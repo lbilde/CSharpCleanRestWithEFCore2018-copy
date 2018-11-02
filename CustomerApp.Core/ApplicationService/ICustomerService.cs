@@ -16,7 +16,7 @@ namespace CustomerApp.Core.ApplicationService
         //Read //GET
         Customer FindCustomerById(int id);
         Customer FindCustomerByIdIncludeOrders(int id);
-        List<Customer> GetAllCustomers();
+        List<Customer> GetAllCustomers(Filter filter = null);
         List<Customer> GetAllByFirstName(string name);
         //Update //PUT
         Customer UpdateCustomer(Customer customerUpdate);

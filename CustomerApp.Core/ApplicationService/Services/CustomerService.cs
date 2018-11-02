@@ -57,9 +57,9 @@ namespace CustomerApp.Core.ApplicationService.Services
              */
         }
 
-        public List<Customer> GetAllCustomers()
+        public List<Customer> GetAllCustomers(Filter filter = null)
         {
-            return _customerRepo.ReadAll().ToList();
+            return _customerRepo.ReadAll(filter).ToList();
         }
 
         public List<Customer> GetAllByFirstName(string name)

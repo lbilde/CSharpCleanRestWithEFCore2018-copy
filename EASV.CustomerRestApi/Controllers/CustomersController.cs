@@ -18,10 +18,13 @@ namespace EASV.CustomerRestApi.Controllers
         
         // GET api/customers -- READ All
         [HttpGet]
-        public ActionResult<IEnumerable<Customer>> Get()
+        public ActionResult<IEnumerable<Customer>> Get(Filter filter)
         {
-            ///Customers with all there orders? NO
-            return _customerService.GetAllCustomers();
+            if (filter.CurrentPage == 0 && filter.ItemsPrPage == 0)
+            {
+                return Ok(_customerService.GetAllCustomers());
+            }
+            return Ok(_customerService.GetAllCustomers(filter));
         }
 
         // GET api/customers/5 -- READ By Id
