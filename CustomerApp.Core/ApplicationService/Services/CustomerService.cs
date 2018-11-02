@@ -62,9 +62,9 @@ namespace CustomerApp.Core.ApplicationService.Services
             return _customerRepo.ReadAll(filter).ToList();
         }
 
-        public List<Customer> GetAllByFirstName(string name)
+        public List<Customer> GetAllByFirstName(string name, Filter filter = null)
         {
-            var list = _customerRepo.ReadAll();
+            var list = _customerRepo.ReadAll(filter);
             var queryContinued = list.Where(cust => cust.FirstName.Equals(name));
             queryContinued.OrderBy(customer => customer.FirstName);
             //Not executed anything yet
