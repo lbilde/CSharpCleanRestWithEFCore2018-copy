@@ -77,7 +77,7 @@ namespace EASV.CustomerRestApi
                     builder => builder
                         //.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
                         .WithOrigins("http://localhost:63342").AllowAnyHeader().AllowAnyMethod()
-                        .WithOrigins("https://angularonfirebase-4fe14.firebaseapp.com").AllowAnyHeader().AllowAnyMethod()
+                        .WithOrigins("https://aiof-7084d.firebaseapp.com").AllowAnyHeader().AllowAnyMethod()
                         .WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod()
                     );
             });
