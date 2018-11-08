@@ -76,8 +76,8 @@ namespace EASV.CustomerRestApi
                 options.AddPolicy("AllowSpecificOrigin",
                     builder => builder
                         //.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
-                        .WithOrigins("https://fir-angular1.firebaseapp.com").AllowAnyHeader().AllowAnyMethod()
                         .WithOrigins("http://localhost:63342").AllowAnyHeader().AllowAnyMethod()
+                        .WithOrigins("https://angularonfirebase-4fe14.firebaseapp.com").AllowAnyHeader().AllowAnyMethod()
                         .WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod()
                     );
             });
