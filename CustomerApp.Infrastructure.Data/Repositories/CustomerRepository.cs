@@ -17,20 +17,22 @@ namespace CustomerApp.Infrastructure.Data.Repositories
         
         public Customer Create(Customer customer)
         {
-           var cust = _ctx.Customers.Add(customer).Entity;
+            var customerSaved = _ctx.Customers.Add(customer).Entity;
             _ctx.SaveChanges();
-            return cust;
+            return customerSaved;
         }
 
         public Customer ReadyById(int id)
         {
             return _ctx.Customers
+                .Include(c => c.Type)
                 .FirstOrDefault(c => c.Id == id);
         }
         
         public Customer ReadyByIdIncludeOrders(int id)
         {
             return _ctx.Customers
+                .Include(c => c.Type)
                 .Include(c => c.Orders)
                 .FirstOrDefault(c => c.Id == id);
         }

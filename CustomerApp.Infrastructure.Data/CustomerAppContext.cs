@@ -10,6 +10,11 @@ namespace CustomerApp.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Customer>()
+                .HasOne(c => c.Type)
+                .WithMany(ct => ct.Customers)
+                .OnDelete(DeleteBehavior.SetNull);
+            
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.Customer)
                 .WithMany(c => c.Orders)
@@ -19,17 +24,18 @@ namespace CustomerApp.Infrastructure.Data
                 .HasKey(ol => new { ol.ProductId, ol.OrderId });
 
             modelBuilder.Entity<OrderLine>()
-                .HasOne<Order>(ol => ol.Order)
+                .HasOne(ol => ol.Order)
                 .WithMany(o => o.OrderLines)
                 .HasForeignKey(ol => ol.OrderId);
 
             modelBuilder.Entity<OrderLine>()
-                .HasOne<Product>(ol => ol.Product)
+                .HasOne(ol => ol.Product)
                 .WithMany(p => p.OrderLines)
                 .HasForeignKey(ol => ol.ProductId);
         }
 
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerType> CustomerTypes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<OrderLine> OrderLines { get; set; }
