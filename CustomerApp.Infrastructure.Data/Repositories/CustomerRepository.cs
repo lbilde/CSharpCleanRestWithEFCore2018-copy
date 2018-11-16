@@ -17,6 +17,10 @@ namespace CustomerApp.Infrastructure.Data.Repositories
         
         public Customer Create(Customer customer)
         {
+            if (customer.Type != null)
+            {
+                _ctx.Attach(customer.Type).State = EntityState.Unchanged;
+            }
             var customerSaved = _ctx.Customers.Add(customer).Entity;
             _ctx.SaveChanges();
             return customerSaved;
@@ -50,6 +54,7 @@ namespace CustomerApp.Infrastructure.Data.Repositories
         {
             _ctx.Attach(customerUpdate).State = EntityState.Modified;
             _ctx.Entry(customerUpdate).Collection(c => c.Orders).IsModified = true;
+            _ctx.Entry(customerUpdate).Reference(c => c.Type).IsModified = true;
             var orders = _ctx.Orders.Where(o => o.Customer.Id == customerUpdate.Id
                                    && !customerUpdate.Orders.Exists(co => co.Id == o.Id));
             foreach (var order in orders)
