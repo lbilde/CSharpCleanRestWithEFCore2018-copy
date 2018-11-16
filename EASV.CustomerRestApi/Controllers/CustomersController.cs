@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CustomerApp.Core.ApplicationService;
 using CustomerApp.Core.Entity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,21 @@ namespace EASV.CustomerRestApi.Controllers
         
         // GET api/customers -- READ All
         [HttpGet]
-        public ActionResult<IEnumerable<Customer>> Get([FromQuery] Filter filter)
+        public ActionResult<FilteredList<Customer>> Get([FromQuery] Filter filter)
         {
-            if (filter.CurrentPage == 0 && filter.ItemsPrPage == 0)
+            try
             {
-                return Ok(_customerService.GetAllCustomers());
+                if (filter.CurrentPage == 0 && filter.ItemsPrPage == 0)
+                {
+                    return Ok(_customerService.GetAllCustomers(null));
+                }
+                return Ok(_customerService.GetAllCustomers(filter));
             }
-            return Ok(_customerService.GetAllCustomers(filter));
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+            
         }
 
         // GET api/customers/5 -- READ By Id

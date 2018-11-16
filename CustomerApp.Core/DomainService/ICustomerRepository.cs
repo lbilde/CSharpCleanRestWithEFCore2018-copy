@@ -12,7 +12,8 @@ namespace CustomerApp.Core.DomainService
         Customer Create(Customer customer);
         //Read Data
         Customer ReadyById(int id);
-        IEnumerable<Customer> ReadAll(Filter filter);
+        FilteredList<Customer> ReadAll(Filter filter);
+        int Count();
         //Update Data
         Customer Update(Customer customerUpdate);
         //Delete Data

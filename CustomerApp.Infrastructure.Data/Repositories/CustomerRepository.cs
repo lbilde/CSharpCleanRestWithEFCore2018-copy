@@ -41,19 +41,29 @@ namespace CustomerApp.Infrastructure.Data.Repositories
                 .FirstOrDefault(c => c.Id == id);
         }
 
-        public IEnumerable<Customer> ReadAll(Filter filter)
+        public FilteredList<Customer> ReadAll(Filter filter)
         {
+            //Create a Filtered List
+            var filteredList = new FilteredList<Customer>();
+            
+            //If there is a Filter then filter the list and set Count
             if (filter != null && filter.ItemsPrPage > 0 && filter.CurrentPage > 0)
             {
-                return _ctx.Customers
+                filteredList.List = _ctx.Customers
                     .Include(c => c.Type)
                     .Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
                     .Take(filter.ItemsPrPage);
+                filteredList.Count = _ctx.Customers.Count();
+                return filteredList;
             }
-            return _ctx.Customers
+            
+            //Else just return the full list and get the count from the list (to save a SQL call)
+            filteredList.List = _ctx.Customers
                     .Include(c => c.Type);
+            filteredList.Count = filteredList.List.Count();
+            return filteredList;
         }
-
+        
         public Customer Update(Customer customerUpdate)
         {
             _ctx.Attach(customerUpdate).State = EntityState.Modified;
@@ -78,6 +88,11 @@ namespace CustomerApp.Infrastructure.Data.Repositories
             var custRemoved = _ctx.Remove(new Customer {Id = id}).Entity;
             _ctx.SaveChanges();
             return custRemoved;
+        }
+
+        public int Count()
+        {
+            return _ctx.Customers.Count();
         }
     }
 }

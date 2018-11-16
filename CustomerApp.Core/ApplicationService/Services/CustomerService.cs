@@ -42,33 +42,12 @@ namespace CustomerApp.Core.ApplicationService.Services
 
         public Customer FindCustomerByIdIncludeOrders(int id)
         {
-            var customer = _customerRepo.ReadyByIdIncludeOrders(id);
-            return customer;
-            
-            /*    Read Cust By Id
-             *     SELECT "c"."Id", "c"."Address", "c"."FirstName", "c"."LastName"
-                  FROM "Customers" AS "c"
-                  WHERE "c"."Id" = @__id_0
-                  LIMIT 1
-             */
-            /*    Read Orders with Customer ID
-             *     SELECT "o"."Id", "o"."CustomerId", "o"."DeliveryDate", "o"."OrderDate"
-                    FROM "Orders" AS "o"
-             */
+            return _customerRepo.ReadyByIdIncludeOrders(id);
         }
 
-        public List<Customer> GetAllCustomers(Filter filter = null)
+        public FilteredList<Customer> GetAllCustomers(Filter filter = null)
         {
-            return _customerRepo.ReadAll(filter).ToList();
-        }
-
-        public List<Customer> GetAllByFirstName(string name, Filter filter = null)
-        {
-            var list = _customerRepo.ReadAll(filter);
-            var queryContinued = list.Where(cust => cust.FirstName.Equals(name));
-            queryContinued.OrderBy(customer => customer.FirstName);
-            //Not executed anything yet
-            return queryContinued.ToList();
+            return _customerRepo.ReadAll(filter);
         }
 
         public Customer UpdateCustomer(Customer customerUpdate)
@@ -79,6 +58,11 @@ namespace CustomerApp.Core.ApplicationService.Services
         public Customer DeleteCustomer(int id)
         {
             return _customerRepo.Delete(id);
+        }
+
+        public int Count()
+        {
+            return _customerRepo.Count();
         }
     }
 }

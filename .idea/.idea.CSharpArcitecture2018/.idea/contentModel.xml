@@ -21,7 +21,10 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="CustomerApp.Core.csproj" t="IncludeRecursive" />
         <e p="DomainService" t="Include">
-          <e p="Filter.cs" t="Include" />
+          <e p="Filtering" t="Include">
+            <e p="Filter.cs" t="Include" />
+            <e p="FilteredList.cs" t="Include" />
+          </e>
           <e p="ICustomerRepository.cs" t="Include" />
           <e p="IOrderRepository.cs" t="Include" />
         </e>
