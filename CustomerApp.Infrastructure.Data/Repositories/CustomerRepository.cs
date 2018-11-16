@@ -45,9 +45,13 @@ namespace CustomerApp.Infrastructure.Data.Repositories
         {
             if (filter != null && filter.ItemsPrPage > 0 && filter.CurrentPage > 0)
             {
-                return _ctx.Customers.Skip((filter.CurrentPage - 1) * filter.ItemsPrPage).Take(filter.ItemsPrPage);
+                return _ctx.Customers
+                    .Include(c => c.Type)
+                    .Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
+                    .Take(filter.ItemsPrPage);
             }
-            return _ctx.Customers;
+            return _ctx.Customers
+                    .Include(c => c.Type);
         }
 
         public Customer Update(Customer customerUpdate)
