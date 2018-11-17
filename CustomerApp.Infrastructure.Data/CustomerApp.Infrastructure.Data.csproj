@@ -9,11 +9,18 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.1.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.3" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="2.1.6" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\CustomerApp.Core.Entity\CustomerApp.Core.Entity.csproj" />
       <ProjectReference Include="..\CustomerApp.Core\CustomerApp.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>..\..\..\..\..\..\..\usr\local\share\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.identity.entityframeworkcore\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

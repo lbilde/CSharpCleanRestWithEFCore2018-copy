@@ -69,12 +69,14 @@
           <e p="CustomerRepository.cs" t="Include" />
           <e p="OrderRepository.cs" t="Include" />
         </e>
+        <e p="SQL Queries.txt" t="Include" />
       </e>
       <e p="EASV.CustomerRestApi" t="IncludeRecursive">
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="AccountController.cs" t="Include" />
           <e p="CustomersController.cs" t="Include" />
           <e p="OrdersController.cs" t="Include" />
         </e>

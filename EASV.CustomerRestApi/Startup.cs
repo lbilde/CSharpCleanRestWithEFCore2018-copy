@@ -1,16 +1,21 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using CustomerApp.Core.ApplicationService;
 using CustomerApp.Core.ApplicationService.Services;
 using CustomerApp.Core.DomainService;
 using CustomerApp.Core.Entity;
 using CustomerApp.Infrastructure.Data;
 using CustomerApp.Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -57,6 +62,34 @@ namespace EASV.CustomerRestApi
                     opt => opt
                         .UseSqlServer(_conf.GetConnectionString("DefaultConnection")));
             }
+            
+            // ===== Add Identity ========
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<CustomerAppContext>()
+                .AddDefaultTokenProviders();
+            
+            // ===== Add Jwt Authentication ========
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = _conf["JwtIssuer"],
+                        ValidAudience = _conf["JwtIssuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_conf["JwtKey"])),
+                        ClockSkew = TimeSpan.Zero // remove delay of token when expire
+                    };
+                });
             
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();

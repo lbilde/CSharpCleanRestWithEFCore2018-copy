@@ -1,15 +1,18 @@
 using CustomerApp.Core.Entity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CustomerApp.Infrastructure.Data
 {
-    public class CustomerAppContext: DbContext
+    public class CustomerAppContext: IdentityDbContext
     {
         public CustomerAppContext(DbContextOptions<CustomerAppContext> opt) 
             : base(opt) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<Customer>()
                 .HasOne(c => c.Type)
                 .WithMany(ct => ct.Customers)
