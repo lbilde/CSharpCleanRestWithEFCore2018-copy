@@ -1,10 +1,11 @@
 using CustomerApp.Core.Entity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CustomerApp.Infrastructure.Data
 {
-    public class CustomerAppContext: DbContext
+    public partial class CustomerAppContext : IdentityDbContext<IdentityUser>
     {
         public CustomerAppContext(DbContextOptions<CustomerAppContext> opt) 
             : base(opt) { }

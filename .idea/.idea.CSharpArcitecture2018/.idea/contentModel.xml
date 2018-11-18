@@ -37,7 +37,6 @@
         </e>
       </e>
       <e p="CustomerApp.Core.Entity" t="IncludeRecursive">
-        <e p="ApplicationUser.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Customer.cs" t="Include" />
         <e p="CustomerApp.Core.Entity.csproj" t="IncludeRecursive" />
@@ -55,6 +54,7 @@
         <e p="Product.cs" t="Include" />
       </e>
       <e p="CustomerApp.Infrastructure.Data" t="IncludeRecursive">
+        <e p="ApplicationUser.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="CustomerApp.Infrastructure.Data.csproj" t="IncludeRecursive" />
         <e p="CustomerAppContext.cs" t="Include" />

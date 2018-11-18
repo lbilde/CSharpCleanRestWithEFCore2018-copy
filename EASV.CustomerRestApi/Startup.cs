@@ -60,8 +60,6 @@ namespace EASV.CustomerRestApi
                 services.AddDbContext<CustomerAppContext>(
                     opt => opt
                         .UseSqlServer(_conf.GetConnectionString("DefaultConnection")));
-                services.AddDefaultIdentity<IdentityUser>()
-                    .AddEntityFrameworkStores<CustomerAppContext>();
             }
             
             // ===== Add Identity ========
