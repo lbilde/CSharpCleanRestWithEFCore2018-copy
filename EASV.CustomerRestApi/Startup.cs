@@ -140,7 +140,6 @@ namespace EASV.CustomerRestApi
                     ctx.Database.EnsureCreated();
                 }
                 app.UseHsts();
-                app.UseExceptionHandler("/Error");
             }
             
             // Shows UseCors with named policy.
