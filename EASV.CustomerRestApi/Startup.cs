@@ -41,7 +41,6 @@ namespace EASV.CustomerRestApi
                 .AddEnvironmentVariables();
             _conf = builder.Build();
             
-            
         }
         
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -141,12 +140,13 @@ namespace EASV.CustomerRestApi
                     ctx.Database.EnsureCreated();
                 }
                 app.UseHsts();
+                
             }
             
             // Shows UseCors with named policy.
             app.UseCors("AllowSpecificOrigin");
             
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMvc();
             
             app.UseSwagger();
