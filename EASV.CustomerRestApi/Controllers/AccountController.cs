@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EASV.CustomerRestApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
