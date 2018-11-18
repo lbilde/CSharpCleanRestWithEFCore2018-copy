@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CustomerApp.Infrastructure.Data
 {
-    public class CustomerAppContext: IdentityDbContext
+    public class CustomerAppContext: DbContext
     {
         public CustomerAppContext(DbContextOptions<CustomerAppContext> opt) 
             : base(opt) { }
