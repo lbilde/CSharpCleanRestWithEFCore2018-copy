@@ -50,7 +50,7 @@ namespace CustomerApp.Infrastructure.Data.Repositories
 
         public User SignIn(User user, string readablePassword)
         {
-            var userFromDB = _ctx.Users.FirstOrDefault(u => u.Id == user.Id);
+            var userFromDB = _ctx.Users.FirstOrDefault(u => u.Email == user.Email);
             var hasher = new PasswordHasher<User>();
             var result = hasher.VerifyHashedPassword(user, userFromDB.PasswordHash, readablePassword);
             if(result == PasswordVerificationResult.Failed) throw new AuthenticationException("User failed to log in");
