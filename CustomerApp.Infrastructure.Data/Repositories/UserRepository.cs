@@ -44,6 +44,7 @@ namespace CustomerApp.Infrastructure.Data.Repositories
             var hasher = new PasswordHasher<User>();
             user.PasswordHash = hasher.HashPassword(user, readablePassword);
             var savedUser = _ctx.Users.Add(user).Entity;
+            _ctx.SaveChanges();
             return savedUser;
         }
 
