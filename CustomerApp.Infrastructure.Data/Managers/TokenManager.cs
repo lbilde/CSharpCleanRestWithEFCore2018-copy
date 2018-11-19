@@ -11,15 +11,15 @@ namespace CustomerApp.Infrastructure.Data.Managers
 {
     public class TokenManager
     {
-        private string jwtKey;
-        private double jwtExpireDays;
-        private string jwtIssuer;
+        private readonly string _jwtKey;
+        private readonly double _jwtExpireDays;
+        private readonly string _jwtIssuer;
 
         public TokenManager(string jwtKey, double jwtExpireDays, string jwtIssuer)
         {
-            this.jwtKey = jwtKey;
-            this.jwtExpireDays = jwtExpireDays;
-            this.jwtIssuer = jwtIssuer;
+            _jwtKey = jwtKey;
+            _jwtExpireDays = jwtExpireDays;
+            _jwtIssuer = jwtIssuer;
         }
         
         public async Task<string> GenerateJwtToken(string email, IdentityUser user)
@@ -31,13 +31,13 @@ namespace CustomerApp.Infrastructure.Data.Managers
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(jwtExpireDays);
+            var expires = DateTime.Now.AddDays(_jwtExpireDays);
 
             var token = new JwtSecurityToken(
-                jwtIssuer,
-                jwtIssuer,
+                _jwtIssuer,
+                _jwtIssuer,
                 claims,
                 expires: expires,
                 signingCredentials: creds

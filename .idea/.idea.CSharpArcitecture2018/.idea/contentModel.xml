@@ -37,6 +37,9 @@
         </e>
       </e>
       <e p="CustomerApp.Core.Entity" t="IncludeRecursive">
+        <e p="Abstractions" t="Include">
+          <e p="IUser.cs" t="Include" />
+        </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Customer.cs" t="Include" />
         <e p="CustomerApp.Core.Entity.csproj" t="IncludeRecursive" />
@@ -58,6 +61,9 @@
         <e p="CustomerApp.Infrastructure.Data.csproj" t="IncludeRecursive" />
         <e p="CustomerAppContext.cs" t="Include" />
         <e p="DBInitializer.cs" t="Include" />
+        <e p="Entities" t="Include">
+          <e p="AuthUser.cs" t="Include" />
+        </e>
         <e p="Managers" t="Include">
           <e p="TokenManager.cs" t="Include" />
         </e>
@@ -82,6 +88,7 @@
           <e p="AccountController.cs" t="Include" />
           <e p="CustomersController.cs" t="Include" />
           <e p="OrdersController.cs" t="Include" />
+          <e p="UsersController.cs" t="Include" />
         </e>
         <e p="customerApp.db" t="Include" />
         <e p="Dtos" t="Include">

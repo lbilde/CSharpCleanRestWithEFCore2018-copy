@@ -63,7 +63,7 @@ namespace EASV.CustomerRestApi
             }
             
             // ===== Add Identity ========
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<AuthUser, IdentityRole>()
                 .AddEntityFrameworkStores<CustomerAppContext>()
                 .AddDefaultTokenProviders();
             
