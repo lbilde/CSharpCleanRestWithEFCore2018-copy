@@ -93,6 +93,9 @@ namespace EASV.CustomerRestApi
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
             
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderService, OrderService>();
 
@@ -145,6 +148,7 @@ namespace EASV.CustomerRestApi
             // Shows UseCors with named policy.
             app.UseCors("AllowSpecificOrigin");
             
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
             

@@ -42,19 +42,18 @@ namespace EASV.CustomerRestApi.Controllers
             try
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+
+                if (!result.Succeeded) return StatusCode(500, "Login Failed");
                 
-                if (result.Succeeded)
-                {
-                    var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                    return await _tokenManager
-                        .GenerateJwtToken(model.Email, appUser);
-                }
+                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+                return await _tokenManager
+                    .GenerateJwtToken(model.Email, appUser);
+
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
-            return StatusCode(500, "Login Failed");
         }
        
         [HttpPost]
@@ -68,19 +67,17 @@ namespace EASV.CustomerRestApi.Controllers
                     Email = model.Email
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-    
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, false);
-                    return await _tokenManager
-                        .GenerateJwtToken(model.Email, user);
-                }
+
+                if (!result.Succeeded) return StatusCode(500, "Failed to create User");
+                
+                await _signInManager.SignInAsync(user, false);
+                return await _tokenManager
+                    .GenerateJwtToken(model.Email, user);
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
-            return StatusCode(500, "Unknown Error");
         }
     }
 }

@@ -1,3 +1,4 @@
 Drop All:
-DROP TABLE IF EXISTS dbo.OrderLines, dbo.Orders, dbo.Products, dbo.Customers, dbo.CustomerTypes;
 
+DROP TABLE IF EXISTS dbo.OrderLines, dbo.Orders, dbo.Products, dbo.Customers, dbo.CustomerTypes, dbo.AspNetUserClaims,
+dbo.AspNetUserLogins, dbo.AspNetUserRoles, dbo.AspNetUserTokens, dbo.AspNetUsers, dbo.AspNetRoleClaims,dbo.AspNetRoles

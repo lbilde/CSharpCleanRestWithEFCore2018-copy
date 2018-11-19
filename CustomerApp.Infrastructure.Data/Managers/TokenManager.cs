@@ -22,7 +22,7 @@ namespace CustomerApp.Infrastructure.Data.Managers
             _jwtIssuer = jwtIssuer;
         }
         
-        public async Task<string> GenerateJwtToken(string email, IdentityUser user)
+        public async Task<string> GenerateJwtToken(string email, AuthUser user)
         {
             var claims = new List<Claim>
             {

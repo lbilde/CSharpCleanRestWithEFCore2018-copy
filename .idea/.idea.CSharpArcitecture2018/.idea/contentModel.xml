@@ -13,9 +13,11 @@
         <e p="ApplicationService" t="Include">
           <e p="ICustomerService.cs" t="Include" />
           <e p="IOrderService.cs" t="Include" />
+          <e p="IUserService.cs" t="Include" />
           <e p="Services" t="Include">
             <e p="CustomerService.cs" t="Include" />
             <e p="OrderService.cs" t="Include" />
+            <e p="UserService.cs" t="Include" />
           </e>
         </e>
         <e p="bin" t="ExcludeRecursive" />
@@ -27,6 +29,7 @@
           </e>
           <e p="ICustomerRepository.cs" t="Include" />
           <e p="IOrderRepository.cs" t="Include" />
+          <e p="IUserRepository.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -77,6 +80,7 @@
         <e p="Repositories" t="Include">
           <e p="CustomerRepository.cs" t="Include" />
           <e p="OrderRepository.cs" t="Include" />
+          <e p="UserRepository.cs" t="Include" />
         </e>
         <e p="SQL Queries.txt" t="Include" />
       </e>
@@ -96,7 +100,6 @@
           <e p="RegisterDto.cs" t="Include" />
         </e>
         <e p="EASV.CustomerRestApi.csproj" t="IncludeRecursive" />
-        <e p="Managers" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.1" t="Include">
