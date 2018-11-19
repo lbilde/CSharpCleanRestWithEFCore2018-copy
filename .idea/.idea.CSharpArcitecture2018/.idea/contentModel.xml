@@ -58,6 +58,9 @@
         <e p="CustomerApp.Infrastructure.Data.csproj" t="IncludeRecursive" />
         <e p="CustomerAppContext.cs" t="Include" />
         <e p="DBInitializer.cs" t="Include" />
+        <e p="Managers" t="Include">
+          <e p="TokenManager.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.1" t="Include">
@@ -81,6 +84,10 @@
           <e p="OrdersController.cs" t="Include" />
         </e>
         <e p="customerApp.db" t="Include" />
+        <e p="Dtos" t="Include">
+          <e p="LoginDto.cs" t="Include" />
+          <e p="RegisterDto.cs" t="Include" />
+        </e>
         <e p="EASV.CustomerRestApi.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
