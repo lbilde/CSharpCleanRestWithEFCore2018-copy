@@ -1,19 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using CustomerApp.Core.ApplicationService;
 using CustomerApp.Core.Entity;
-using CustomerApp.Infrastructure.Data;
 using CustomerApp.Infrastructure.Data.Managers;
 using EASV.CustomerRestApi.Dtos;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace EASV.CustomerRestApi.Controllers
 {
