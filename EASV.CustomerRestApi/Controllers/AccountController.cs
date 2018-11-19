@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CustomerApp.Infrastructure.Data;
 using CustomerApp.Infrastructure.Data.Managers;
 using EASV.CustomerRestApi.Dtos;
 using Microsoft.AspNetCore.Identity;
@@ -18,13 +19,13 @@ namespace EASV.CustomerRestApi.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<AuthUser> _signInManager;
+        private readonly UserManager<AuthUser> _userManager;
         private readonly TokenManager _tokenManager;
         
         public AccountController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AuthUser> userManager,
+            SignInManager<AuthUser> signInManager,
             IConfiguration configuration)
         {
             _userManager = userManager;
@@ -61,7 +62,7 @@ namespace EASV.CustomerRestApi.Controllers
         {   
             try
             {
-                var user = new IdentityUser
+                var user = new AuthUser
                 {
                     UserName = model.Email, 
                     Email = model.Email

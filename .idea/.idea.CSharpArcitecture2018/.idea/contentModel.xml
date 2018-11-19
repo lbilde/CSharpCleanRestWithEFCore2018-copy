@@ -96,6 +96,7 @@
           <e p="RegisterDto.cs" t="Include" />
         </e>
         <e p="EASV.CustomerRestApi.csproj" t="IncludeRecursive" />
+        <e p="Managers" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.1" t="Include">
