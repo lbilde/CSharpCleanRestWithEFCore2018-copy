@@ -5,6 +5,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CustomerApp.Core.ApplicationService;
+using CustomerApp.Core.Entity;
 using CustomerApp.Infrastructure.Data;
 using CustomerApp.Infrastructure.Data.Managers;
 using EASV.CustomerRestApi.Dtos;
@@ -19,17 +21,14 @@ namespace EASV.CustomerRestApi.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly SignInManager<AuthUser> _signInManager;
-        private readonly UserManager<AuthUser> _userManager;
+        private readonly IUserService _userService;
         private readonly TokenManager _tokenManager;
         
         public AccountController(
-            UserManager<AuthUser> userManager,
-            SignInManager<AuthUser> signInManager,
+            IUserService userService,
             IConfiguration configuration)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _userService = userService;
             _tokenManager = new TokenManager(
                 configuration["JwtKey"],
                 double.Parse(configuration["JwtExpireDays"]),
@@ -37,17 +36,18 @@ namespace EASV.CustomerRestApi.Controllers
         }
         
         [HttpPost]
-        public async Task<object> Login([FromBody] LoginDto model)
+        public ActionResult<string> Login([FromBody] LoginDto model)
         {
             try
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+                var user = new User
+                {
+                    Email = model.Email
+                };
+                var userFound = _userService.SignIn(user, model.Password);
 
-                if (!result.Succeeded) return StatusCode(500, "Login Failed");
-                
-                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return await _tokenManager
-                    .GenerateJwtToken(model.Email, appUser);
+                return _tokenManager
+                    .GenerateJwtToken(model.Email, userFound);
 
             }
             catch (Exception e)
@@ -57,22 +57,19 @@ namespace EASV.CustomerRestApi.Controllers
         }
        
         [HttpPost]
-        public async Task<ActionResult<string>> Register([FromBody] RegisterDto model)
+        public ActionResult<string> Register([FromBody] RegisterDto model)
         {   
             try
             {
-                var user = new AuthUser
+                var user = new User
                 {
                     UserName = model.Email, 
                     Email = model.Email
                 };
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                if (!result.Succeeded) return StatusCode(500, "Failed to create User");
+                var userFound = _userService.CreateUser(user, model.Password);
                 
-                await _signInManager.SignInAsync(user, false);
-                return await _tokenManager
-                    .GenerateJwtToken(model.Email, user);
+                return Ok(_tokenManager
+                    .GenerateJwtToken(model.Email, userFound));
             }
             catch (Exception e)
             {

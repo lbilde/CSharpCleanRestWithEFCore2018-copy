@@ -22,7 +22,7 @@ namespace EASV.CustomerRestApi.Controllers
         // GET api/orders -- READ All
         [Authorize]
         [HttpGet]
-        public ActionResult<IEnumerable<IUser>> Get([FromQuery] Filter filter)
+        public ActionResult<IEnumerable<User>> Get([FromQuery] Filter filter)
         {
             try
             {

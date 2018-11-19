@@ -4,6 +4,10 @@ namespace CustomerApp.Core.ApplicationService
 {
     public interface IUserService
     {
-        FilteredList<IUser> GetAllUsers(Filter filter);
+        FilteredList<User> GetAllUsers(Filter filter);
+        
+        User CreateUser(User user, string readablePassword);
+
+        User SignIn(User user, string readablePassword);
     }
 }

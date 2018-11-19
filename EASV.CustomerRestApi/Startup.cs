@@ -62,11 +62,6 @@ namespace EASV.CustomerRestApi
                         .UseSqlServer(_conf.GetConnectionString("DefaultConnection")));
             }
             
-            // ===== Add Identity ========
-            services.AddIdentity<AuthUser, IdentityRole>()
-                .AddEntityFrameworkStores<CustomerAppContext>()
-                .AddDefaultTokenProviders();
-            
             // ===== Add Jwt Authentication ========
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
             services

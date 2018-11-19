@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CustomerApp.Infrastructure.Data
 {
-    public partial class CustomerAppContext : IdentityDbContext<AuthUser>
+    public class CustomerAppContext: DbContext
     {
         public CustomerAppContext(DbContextOptions<CustomerAppContext> opt) 
             : base(opt) { }
@@ -43,5 +43,7 @@ namespace CustomerApp.Infrastructure.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<OrderLine> OrderLines { get; set; }
+        public DbSet<User> Users { get; set; }
+        
     }
 }

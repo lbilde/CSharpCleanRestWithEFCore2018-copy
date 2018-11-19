@@ -4,6 +4,9 @@ namespace CustomerApp.Core.DomainService
 {
     public interface IUserRepository
     {
-        FilteredList<IUser> ReadAll(Filter filter);
+        FilteredList<User> ReadAll(Filter filter);
+        User CreateUser(User user, string readablePassword);
+        User SignIn(User user, string readablePassword);
     }
+   
 }

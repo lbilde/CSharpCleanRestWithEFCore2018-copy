@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CustomerApp.Core.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -22,12 +23,13 @@ namespace CustomerApp.Infrastructure.Data.Managers
             _jwtIssuer = jwtIssuer;
         }
         
-        public async Task<string> GenerateJwtToken(string email, AuthUser user)
+        public string GenerateJwtToken(string email, User user)
         {
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                //new Claim(ClaimTypes.Role, user.),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
 

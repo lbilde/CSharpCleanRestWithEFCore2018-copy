@@ -1,6 +1,9 @@
+using System;
 using System.Linq;
+using System.Security.Authentication;
 using CustomerApp.Core.DomainService;
 using CustomerApp.Core.Entity;
+using Microsoft.AspNetCore.Identity;
 
 namespace CustomerApp.Infrastructure.Data.Repositories
 {
@@ -13,16 +16,16 @@ namespace CustomerApp.Infrastructure.Data.Repositories
             _ctx = ctx;
         }
         
-        public FilteredList<IUser> ReadAll(Filter filter)
+        public FilteredList<User> ReadAll(Filter filter)
         {
             //Create a Filtered List
-            var filteredList = new FilteredList<IUser>();
+            var filteredList = new FilteredList<User>();
             
             //If there is a Filter then filter the list and set Count
             if (filter != null && filter.ItemsPrPage > 0 && filter.CurrentPage > 0)
             {
                 filteredList.List = _ctx.Users
-                    .Select(u => new AuthUser { Id = u.Id, Email = u.Email})
+                    .Select(u => new User { Id = u.Id, Email = u.Email})
                     .Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
                     .Take(filter.ItemsPrPage);
                 filteredList.Count = _ctx.Users.Count();
@@ -31,9 +34,26 @@ namespace CustomerApp.Infrastructure.Data.Repositories
             
             //Else just return the full list and get the count from the list (to save a SQL call)
             filteredList.List = _ctx.Users
-                .Select(u => new AuthUser { Id = u.Id, Email = u.Email});
+                .Select(u => new User { Id = u.Id, Email = u.Email});
             filteredList.Count = filteredList.List.Count();
             return filteredList;
+        }
+
+        public User CreateUser(User user, string readablePassword)
+        {
+            var hasher = new PasswordHasher<User>();
+            user.PasswordHash = hasher.HashPassword(user, readablePassword);
+            var savedUser = _ctx.Users.Add(user).Entity;
+            return savedUser;
+        }
+
+        public User SignIn(User user, string readablePassword)
+        {
+            var userFromDB = _ctx.Users.FirstOrDefault(u => u.Id == user.Id);
+            var hasher = new PasswordHasher<User>();
+            var result = hasher.VerifyHashedPassword(user, userFromDB.PasswordHash, readablePassword);
+            if(result == PasswordVerificationResult.Failed) throw new AuthenticationException("User failed to log in");
+            return userFromDB;
         }
     }
 }
