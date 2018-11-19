@@ -19,6 +19,11 @@ namespace CustomerApp.Infrastructure.Data
                 .WithMany(ct => ct.Customers)
                 .OnDelete(DeleteBehavior.SetNull);
             
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Role)
+                .WithMany(r => r.Users)
+                .OnDelete(DeleteBehavior.SetNull);
+            
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.Customer)
                 .WithMany(c => c.Orders)
@@ -44,6 +49,7 @@ namespace CustomerApp.Infrastructure.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<OrderLine> OrderLines { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         
     }
 }

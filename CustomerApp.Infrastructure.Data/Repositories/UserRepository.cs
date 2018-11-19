@@ -41,6 +41,7 @@ namespace CustomerApp.Infrastructure.Data.Repositories
 
         public User CreateUser(User user, string readablePassword)
         {
+            if (string.IsNullOrEmpty(user.UserName)) user.UserName = user.Email;
             var hasher = new PasswordHasher<User>();
             user.PasswordHash = hasher.HashPassword(user, readablePassword);
             var savedUser = _ctx.Users.Add(user).Entity;
