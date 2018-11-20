@@ -87,6 +87,7 @@
         <e p="Controllers" t="Include">
           <e p="AccountController.cs" t="Include" />
           <e p="CustomersController.cs" t="Include" />
+          <e p="CustomerTypeController.cs" t="Include" />
           <e p="OrdersController.cs" t="Include" />
           <e p="UsersController.cs" t="Include" />
         </e>

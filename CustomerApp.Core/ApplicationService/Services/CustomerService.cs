@@ -50,6 +50,12 @@ namespace CustomerApp.Core.ApplicationService.Services
             return _customerRepo.ReadAll(filter);
         }
 
+        public List<CustomerType> ReadCustomerTypes()
+        {
+            return _customerRepo.ReadCustomerTypes();
+        }
+
+
         public Customer UpdateCustomer(Customer customerUpdate)
         {
             return _customerRepo.Update(customerUpdate);

@@ -32,7 +32,12 @@ namespace CustomerApp.Infrastructure.Data.Repositories
                 .Include(c => c.Type)
                 .FirstOrDefault(c => c.Id == id);
         }
-        
+
+        public List<CustomerType> ReadCustomerTypes()
+        {
+            return _ctx.CustomerTypes.ToList();
+        }
+
         public Customer ReadyByIdIncludeOrders(int id)
         {
             return _ctx.Customers

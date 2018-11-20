@@ -12,6 +12,7 @@ namespace CustomerApp.Core.DomainService
         Customer Create(Customer customer);
         //Read Data
         Customer ReadyById(int id);
+        List<CustomerType> ReadCustomerTypes();
         FilteredList<Customer> ReadAll(Filter filter);
         int Count();
         //Update Data

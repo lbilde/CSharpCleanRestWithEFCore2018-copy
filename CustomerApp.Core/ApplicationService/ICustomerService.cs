@@ -17,6 +17,7 @@ namespace CustomerApp.Core.ApplicationService
         Customer FindCustomerById(int id);
         Customer FindCustomerByIdIncludeOrders(int id);
         FilteredList<Customer> GetAllCustomers(Filter filter);
+        List<CustomerType> ReadCustomerTypes();
         int Count();
         //Update //PUT
         Customer UpdateCustomer(Customer customerUpdate);
