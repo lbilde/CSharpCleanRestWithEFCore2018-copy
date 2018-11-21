@@ -9,7 +9,6 @@ namespace CustomerApp.Infrastructure.Data
     {
         public static void SeedDB(CustomerAppContext ctx)
         {
-            ctx.Database.EnsureCreated();
             ctx.Database.ExecuteSqlCommand("DROP TABLE IF EXISTS " +
                                            "dbo.OrderLines, " +
                                            "dbo.Orders, " +
@@ -26,7 +25,8 @@ namespace CustomerApp.Infrastructure.Data
                                            "dbo.users, " +
                                            "dbo.roles");
             ctx.SaveChanges();
-            
+            ctx.Database.EnsureCreated();
+
             var customerTypes = new List<CustomerType>()
             {
                 new CustomerType(){ Name = "Guest" },
