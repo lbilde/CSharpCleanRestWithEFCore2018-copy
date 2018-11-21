@@ -124,7 +124,7 @@ namespace EASV.CustomerRestApi
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var ctx = scope.ServiceProvider.GetService<CustomerAppContext>();
-                    DBInitializer.SeedDB(ctx);
+                    DBInitializerProd.SeedDB(ctx);
                 }
             }
             else

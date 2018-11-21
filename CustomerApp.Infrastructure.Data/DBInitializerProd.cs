@@ -8,23 +8,12 @@ namespace CustomerApp.Infrastructure.Data
     public class DBInitializerProd
     {
         public static void SeedDB(CustomerAppContext ctx)
-        {
-            ctx.Database.ExecuteSqlCommand("DROP TABLE IF EXISTS " +
-                                           "dbo.OrderLines, " +
-                                           "dbo.Orders, " +
-                                           "dbo.Products, " +
-                                           "dbo.Customers, " +
-                                           "dbo.CustomerTypes, " +
-                                           "dbo.AspNetUserClaims, " +
-                                           "dbo.AspNetUserLogins, " +
-                                           "dbo.AspNetUserRoles, " +
-                                           "dbo.AspNetUserTokens, " +
-                                           "dbo.AspNetUsers, " +
-                                           "dbo.AspNetRoleClaims," +
-                                           "dbo.AspNetRoles, " +
-                                           "dbo.users, " +
-                                           "dbo.roles");
-            ctx.SaveChanges();
+        {    
+            ctx.Database.EnsureCreated();
+
+            /*ctx.Database.ExecuteSqlCommand("DROP TABLE IF EXISTS " +
+                                           "dbo.OrderLines, dbo.Orders");
+            ctx.SaveChanges();*/
             ctx.Database.EnsureCreated();
 
             var customerTypes = new List<CustomerType>()
@@ -35,8 +24,9 @@ namespace CustomerApp.Infrastructure.Data
                 new CustomerType(){ Name = "Soo Poor" },
                 new CustomerType(){ Name = "Fun" }
             };
-            ctx.CustomerTypes.AddRange(customerTypes);
-
+            ctx.AddRange(customerTypes);
+            ctx.SaveChanges();
+            
             var customers = new List<Customer>()
             {
                 new Customer(){ FirstName = "Bill1", LastName = "Billson1", Address= "StreetRoad 1122", Type = new CustomerType(){Id = 1}},
@@ -55,7 +45,7 @@ namespace CustomerApp.Infrastructure.Data
                 
             };
             
-            ctx.Customers.AddRange(customers);
+            ctx.AddRange(customers);
 
             ctx.SaveChanges();
         }
