@@ -132,7 +132,7 @@ namespace EASV.CustomerRestApi
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var ctx = scope.ServiceProvider.GetService<CustomerAppContext>();
-                    ctx.Database.EnsureCreated();
+                    DBInitializerProd.SeedDB(ctx);
                 }
                 app.UseHsts();
             }
