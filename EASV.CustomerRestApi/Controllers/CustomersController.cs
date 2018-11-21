@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CustomerApp.Core.ApplicationService;
 using CustomerApp.Core.Entity;
+using EASV.CustomerRestApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EASV.CustomerRestApi.Controllers
@@ -19,13 +20,26 @@ namespace EASV.CustomerRestApi.Controllers
         
         // GET api/customers -- READ All
         [HttpGet]
-        public ActionResult<FilteredList<Customer>> Get([FromQuery] Filter filter)
+        public ActionResult<FilteredList<CustomerDTO>> Get([FromQuery] Filter filter)
         {
             try
             {
                 if (filter.CurrentPage == 0 && filter.ItemsPrPage == 0)
                 {
-                    return Ok(_customerService.GetAllCustomers(null));
+                    var list = _customerService.GetAllCustomers(null);
+                    var newList = new List<CustomerDTO>();
+                    foreach (var customer in list.List)
+                    {
+                        newList.Add(new CustomerDTO()
+                        {
+                            FirstName = customer.FirstName,
+                            LastName = customer.LastName
+                        });
+                    }
+                    var newFilteredList = new FilteredList<CustomerDTO>();
+                    newFilteredList.List = newList;
+                    newFilteredList.Count = list.Count; 
+                    return Ok(newFilteredList);
                 }
                 return Ok(_customerService.GetAllCustomers(filter));
             }
@@ -38,12 +52,18 @@ namespace EASV.CustomerRestApi.Controllers
 
         // GET api/customers/5 -- READ By Id
         [HttpGet("{id}")]
-        public ActionResult<Customer> Get(int id)
+        public ActionResult<CustomerDTO> Get(int id)
         {
             if (id < 1) return BadRequest("Id must be greater then 0");
             
             //return _customerService.FindCustomerById(id);
-            return _customerService.FindCustomerByIdIncludeOrders(id);
+            var coreCustomer = _customerService.FindCustomerByIdIncludeOrders(id);
+            return new CustomerDTO()
+            {
+                Id = coreCustomer.Id,
+                FirstName = coreCustomer.FirstName,
+                LastName = coreCustomer.LastName
+            };
         }
 
         // POST api/customers -- CREATE JSON

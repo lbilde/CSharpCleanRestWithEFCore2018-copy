@@ -63,6 +63,7 @@
         <e p="CustomerApp.Infrastructure.Data.csproj" t="IncludeRecursive" />
         <e p="CustomerAppContext.cs" t="Include" />
         <e p="DBInitializer.cs" t="Include" />
+        <e p="DBInitializerProd.cs" t="Include" />
         <e p="Managers" t="Include">
           <e p="TokenManager.cs" t="Include" />
         </e>
@@ -87,12 +88,13 @@
         <e p="Controllers" t="Include">
           <e p="AccountController.cs" t="Include" />
           <e p="CustomersController.cs" t="Include" />
-          <e p="CustomerTypeController.cs" t="Include" />
+          <e p="CustomerTypesController.cs" t="Include" />
           <e p="OrdersController.cs" t="Include" />
           <e p="UsersController.cs" t="Include" />
         </e>
         <e p="customerApp.db" t="Include" />
         <e p="Dtos" t="Include">
+          <e p="CustomerDTO.cs" t="Include" />
           <e p="LoginDto.cs" t="Include" />
           <e p="RegisterDto.cs" t="Include" />
         </e>
