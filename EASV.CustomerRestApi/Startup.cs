@@ -118,6 +118,11 @@ namespace EASV.CustomerRestApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Shows UseCors with named policy.
+            app.UseCors("AllowSpecificOrigin");
+            
+            app.UseAuthentication();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -135,13 +140,9 @@ namespace EASV.CustomerRestApi
                     ctx.Database.EnsureCreated();
                 }
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
             
-            // Shows UseCors with named policy.
-            app.UseCors("AllowSpecificOrigin");
-            
-            app.UseAuthentication();
-            app.UseHttpsRedirection();
             app.UseMvc();
             
             app.UseSwagger();

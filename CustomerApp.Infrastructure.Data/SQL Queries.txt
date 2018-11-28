@@ -25,3 +25,10 @@ VALUES ('Bill1', 'Billson1', 'StreetRoad 122', 1),
 ('Bill10', 'Billson10', 'StreetRoad 1022', 4), 
 ('Bill11', 'Billson11', 'StreetRoad 1122', 4), 
 ('Bill12', 'Billson12', 'StreetRoad 1222', 3);
+
+INSERT INTO dbo.Roles (Name)
+VALUES ('Guest'), ('User'), ('Administrator'), ('SuperAdministrator')
+
+INSERT INTO dbo.Users ( Id, UserName, Email, PasswordHash, RoleId)
+VALUES ('1ec5e872-4c81-4085-97c9-94035f34c9ba', 'timmy3', 'timmy3@inko.dk', 'AQAAAAEAACcQAAAAEEi5SaGp0VvXCjSBkDleGXTxVV8fEEaEs+vPEXKmQOzBZiVqTn8kSvaNiXc07txrxQ==', 1), 
+('791592ff-98c1-4a2b-9f9a-9a227d565225','lbilde', 'urf@easv.dk', 'AQAAAAEAACcQAAAAEKDwmbRrtQpiaZ22H6Awcpp4pRlOZGo3fSqcvRE3WsyMVOJ4sJEEqXRuDJzEsSJUtA==', 3) 

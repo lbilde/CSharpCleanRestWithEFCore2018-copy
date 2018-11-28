@@ -26,7 +26,8 @@ namespace CustomerApp.Infrastructure.Data.Managers
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                //new Claim(ClaimTypes.Role, user.),
+                new Claim("userName", user.UserName),
+                new Claim("role", user.Role.Name),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
 

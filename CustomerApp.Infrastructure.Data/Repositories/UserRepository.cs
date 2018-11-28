@@ -5,6 +5,7 @@ using System.Security.Authentication;
 using CustomerApp.Core.DomainService;
 using CustomerApp.Core.Entity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomerApp.Infrastructure.Data.Repositories
 {
@@ -53,8 +54,12 @@ namespace CustomerApp.Infrastructure.Data.Repositories
         public User SignIn(User user, string readablePassword)
         {
             var userFromDB = string.IsNullOrEmpty(user.Email)
-                ? _ctx.Users.FirstOrDefault(u => u.UserName == user.UserName)
-                : _ctx.Users.FirstOrDefault(u => u.Email == user.Email);
+                ? _ctx.Users
+                    .Include(u => u.Role)
+                    .FirstOrDefault(u => u.UserName == user.UserName)
+                : _ctx.Users
+                    .Include(u => u.Role)
+                    .FirstOrDefault(u => u.Email == user.Email);
             if(userFromDB == null) throw new InvalidDataException("User Not Found");
 
             var hasher = new PasswordHasher<User>();

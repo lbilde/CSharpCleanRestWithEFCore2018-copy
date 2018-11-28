@@ -57,7 +57,7 @@ namespace CustomerApp.Infrastructure.Data
 
             var role1 = ctx.Roles.Add( new Role { Name = "Guest" }).Entity;
             ctx.Roles.Add( new Role { Name = "User" });
-            ctx.Roles.Add( new Role { Name = "Administrator" });
+            var role3 = ctx.Roles.Add( new Role { Name = "Administrator" }).Entity;
             var role4 = ctx.Roles.Add( new Role { Name = "SuperAdministrator" }).Entity;
 
             ctx.Users.Add(
@@ -75,7 +75,7 @@ namespace CustomerApp.Infrastructure.Data
                     UserName = "lbilde",
                     Email = "urf@easv.dk",
                     PasswordHash = "AQAAAAEAACcQAAAAEKDwmbRrtQpiaZ22H6Awcpp4pRlOZGo3fSqcvRE3WsyMVOJ4sJEEqXRuDJzEsSJUtA==",
-                    Role = role4
+                    Role = role3
                 }
             );
             ctx.SaveChanges();
