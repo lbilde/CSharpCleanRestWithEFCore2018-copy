@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Security.Authentication;
 using CustomerApp.Core.ApplicationService;
 using CustomerApp.Core.Entity;
 using CustomerApp.Infrastructure.Data.Managers;
@@ -17,7 +19,7 @@ namespace EASV.CustomerRestApi.Controllers
         
         public AccountController(
             IUserService userService,
-            IConfiguration configuration)
+            IConfiguration configuration )
         {
             _userService = userService;
             _tokenManager = new TokenManager(
@@ -32,18 +34,26 @@ namespace EASV.CustomerRestApi.Controllers
             try
             {
                 var user = new User
-                {
+                {    
+                    UserName = model.UserName,
                     Email = model.Email
                 };
                 var userFound = _userService.SignIn(user, model.Password);
-
                 return _tokenManager
-                    .GenerateJwtToken(model.Email, userFound);
-
+                    .GenerateJwtToken(userFound);
+                
             }
             catch (Exception e)
             {
-                return StatusCode(500, e.Message);
+                switch (e)
+                {
+                    case AuthenticationException _:
+                        return StatusCode(401, e.Message);
+                    case InvalidDataException _:
+                        return StatusCode(404, e.Message);
+                    default:
+                        return StatusCode(500, e.Message);
+                }
             }
         }
        
@@ -60,7 +70,7 @@ namespace EASV.CustomerRestApi.Controllers
                 var userFound = _userService.CreateUser(user, model.Password);
                 
                 return Ok(_tokenManager
-                    .GenerateJwtToken(model.Email, userFound));
+                    .GenerateJwtToken(userFound));
             }
             catch (Exception e)
             {

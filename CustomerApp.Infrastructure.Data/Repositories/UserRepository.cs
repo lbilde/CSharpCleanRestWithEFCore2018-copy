@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Security.Authentication;
 using CustomerApp.Core.DomainService;
@@ -51,7 +52,11 @@ namespace CustomerApp.Infrastructure.Data.Repositories
 
         public User SignIn(User user, string readablePassword)
         {
-            var userFromDB = _ctx.Users.FirstOrDefault(u => u.Email == user.Email);
+            var userFromDB = string.IsNullOrEmpty(user.Email)
+                ? _ctx.Users.FirstOrDefault(u => u.UserName == user.UserName)
+                : _ctx.Users.FirstOrDefault(u => u.Email == user.Email);
+            if(userFromDB == null) throw new InvalidDataException("User Not Found");
+
             var hasher = new PasswordHasher<User>();
             var result = hasher.VerifyHashedPassword(user, userFromDB.PasswordHash, readablePassword);
             if(result == PasswordVerificationResult.Failed) throw new AuthenticationException("User failed to log in");

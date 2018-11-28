@@ -21,11 +21,10 @@ namespace CustomerApp.Infrastructure.Data.Managers
             _jwtIssuer = jwtIssuer;
         }
         
-        public string GenerateJwtToken(string email, User user)
+        public string GenerateJwtToken(User user)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 //new Claim(ClaimTypes.Role, user.),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)

@@ -124,7 +124,7 @@ namespace EASV.CustomerRestApi
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var ctx = scope.ServiceProvider.GetService<CustomerAppContext>();
-                    DBInitializerProd.SeedDB(ctx);
+                    DBInitializer.SeedDB(ctx);
                 }
             }
             else
@@ -132,7 +132,7 @@ namespace EASV.CustomerRestApi
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var ctx = scope.ServiceProvider.GetService<CustomerAppContext>();
-                    DBInitializerProd.SeedDB(ctx);
+                    ctx.Database.EnsureCreated();
                 }
                 app.UseHsts();
             }
