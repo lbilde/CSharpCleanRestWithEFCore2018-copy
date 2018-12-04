@@ -59,10 +59,10 @@ namespace CustomerApp.Infrastructure.Data.Repositories
             var userFromDB = string.IsNullOrEmpty(user.Email)
                 ? _ctx.Users
                     .Include(u => u.Role)
-                    .FirstOrDefault(u => u.UserName == user.UserName)
+                    .FirstOrDefault(u => u.UserName.Equals(user.UserName))
                 : _ctx.Users
                     .Include(u => u.Role)
-                    .FirstOrDefault(u => u.Email == user.Email);
+                    .FirstOrDefault(u => u.Email.Equals(user.Email));
             if(userFromDB == null) throw new InvalidDataException("User Not Found");
 
             var hasher = new PasswordHasher<User>();
