@@ -13,10 +13,12 @@
         <e p="ApplicationService" t="Include">
           <e p="ICustomerService.cs" t="Include" />
           <e p="IOrderService.cs" t="Include" />
+          <e p="IProductService.cs" t="Include" />
           <e p="IUserService.cs" t="Include" />
           <e p="Services" t="Include">
             <e p="CustomerService.cs" t="Include" />
             <e p="OrderService.cs" t="Include" />
+            <e p="ProductService.cs" t="Include" />
             <e p="UserService.cs" t="Include" />
           </e>
         </e>
@@ -29,6 +31,7 @@
           </e>
           <e p="ICustomerRepository.cs" t="Include" />
           <e p="IOrderRepository.cs" t="Include" />
+          <e p="IProductRepository.cs" t="Include" />
           <e p="IUserRepository.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
@@ -77,6 +80,7 @@
         <e p="Repositories" t="Include">
           <e p="CustomerRepository.cs" t="Include" />
           <e p="OrderRepository.cs" t="Include" />
+          <e p="ProductRepository.cs" t="Include" />
           <e p="UserRepository.cs" t="Include" />
         </e>
         <e p="SQL Queries.txt" t="Include" />
@@ -90,6 +94,7 @@
           <e p="CustomersController.cs" t="Include" />
           <e p="CustomerTypesController.cs" t="Include" />
           <e p="OrdersController.cs" t="Include" />
+          <e p="ProductsController.cs" t="Include" />
           <e p="UsersController.cs" t="Include" />
         </e>
         <e p="customerApp.db" t="Include" />
