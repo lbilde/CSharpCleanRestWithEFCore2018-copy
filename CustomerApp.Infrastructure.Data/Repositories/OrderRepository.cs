@@ -42,13 +42,13 @@ namespace CustomerApp.Infrastructure.Data.Repositories
                 .FirstOrDefault(o => o.Id == id);
         }
 
-        public PagedList<Order> ReadAll(Filter filter)
+        public FilteredList<Order> ReadAll(Filter filter)
         {
             var query = _ctx.Set<Order>();
             
             if (filter == null)
             {
-                return new PagedList<Order>() {Items = _ctx.Orders.ToList(), Count = _ctx.Orders.Count()};
+                return new FilteredList<Order>() {List = _ctx.Orders.ToList(), Count = _ctx.Orders.Count()};
             }
 
             var page = query.Select(e => e)
@@ -61,9 +61,9 @@ namespace CustomerApp.Infrastructure.Data.Repositories
             {
                 int total = page.Key.Total;
                 List<Order> items = page.Select(e => e).ToList();
-                return new PagedList<Order>() {Items = items, Count = total};
+                return new FilteredList<Order>() {List = items, Count = total};
             }
-            return new PagedList<Order>() {Items = new List<Order>(), Count = 0};
+            return new FilteredList<Order>() {List = new List<Order>(), Count = 0};
         }
 
         public int Count()
