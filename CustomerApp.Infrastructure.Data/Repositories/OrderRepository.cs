@@ -33,7 +33,7 @@ namespace CustomerApp.Infrastructure.Data.Repositories
                 foreach (var ol in order.OrderLines)
                 {
                     ol.Order = order;
-                    _ctx.Attach(ol).State = EntityState.Added;
+                    //_ctx.Attach(ol).State = EntityState.Added;
                 }
             } 
             _ctx.Attach(order).State = EntityState.Added;
