@@ -28,7 +28,14 @@ namespace CustomerApp.Infrastructure.Data.Repositories
             var saved = _ctx.Orders.Add(order).Entity;
             _ctx.SaveChanges();
             return saved;*/
-
+            if (order.OrderLines != null)
+            {
+                foreach (var ol in order.OrderLines)
+                {
+                    ol.Order = order;
+                    _ctx.Attach(ol).State = EntityState.Added;
+                }
+            } 
             _ctx.Attach(order).State = EntityState.Added;
             _ctx.SaveChanges();
             return order;
@@ -44,7 +51,10 @@ namespace CustomerApp.Infrastructure.Data.Repositories
 
         public FilteredList<Order> ReadAll(Filter filter)
         {
-            var query = _ctx.Set<Order>();
+            var query = _ctx.Set<Order>()
+                .Include(o => o.OrderLines)
+                .ThenInclude(ol => ol.Product)
+                .Include(o => o.Customer);
             
             if (filter == null)
             {
