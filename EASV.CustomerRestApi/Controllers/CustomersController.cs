@@ -32,6 +32,7 @@ namespace EASV.CustomerRestApi.Controllers
                     {
                         newList.Add(new CustomerDTO()
                         {
+                            Id = customer.Id,
                             FirstName = customer.FirstName,
                             LastName = customer.LastName
                         });

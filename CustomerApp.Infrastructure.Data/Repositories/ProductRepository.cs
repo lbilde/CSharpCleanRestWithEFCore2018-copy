@@ -42,7 +42,8 @@ namespace CustomerApp.Infrastructure.Data.Repositories
                 };
             }
 
-            var page = query.Select(e => e)
+            var page = query
+                .Select(e => e)
                 .Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
                 .Take(filter.ItemsPrPage)
                 .GroupBy(e => new { Total = query.Count() })

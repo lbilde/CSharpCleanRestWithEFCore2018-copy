@@ -96,7 +96,9 @@ namespace CustomerApp.Infrastructure.Data.Repositories
 
         public Order Delete(int id)
         {
-            var removed = _ctx.Remove(new Order {Id = id}).Entity;
+            var order = _ctx.Orders.FirstOrDefault(o => o.Id == id);
+            var removed = _ctx.Remove(order).Entity;
+            _ctx.RemoveRange(order.OrderLines);
             _ctx.SaveChanges();
             return removed;
         }
