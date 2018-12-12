@@ -73,7 +73,7 @@ namespace CustomerApp.Infrastructure.Data.Repositories
 
         public Order Update(Order orderUpdate)
         {
-            //Clone orderlines to new location in memory, so they are not overridden on Attach
+            /*//Clone orderlines to new location in memory, so they are not overridden on Attach
             var newOrderLines = new List<OrderLine>(orderUpdate.OrderLines);
             //Attach order so basic properties are updated
             _ctx.Attach(orderUpdate).State = EntityState.Modified;
@@ -85,9 +85,11 @@ namespace CustomerApp.Infrastructure.Data.Repositories
             foreach (var ol in newOrderLines)
             {
                 _ctx.Entry(ol).State = EntityState.Added;
+                _ctx.Entry(ol.Product).State = EntityState.Unchanged;
             }
             //Update customer relation
-            _ctx.Entry(orderUpdate).Reference(o => o.Customer).IsModified = true;
+            _ctx.Entry(orderUpdate).Reference(o => o.Customer).IsModified = true;*/
+            _ctx.Attach(orderUpdate);
             // Save it
             _ctx.SaveChanges();
             //Return it
